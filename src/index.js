@@ -2,14 +2,36 @@ import React from 'react';
 import { useReducer } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { useState, useReducer } from 'react';
+
+
+const initialState = {  
+  message: 'hi'
+};
+
+function reducer(state, action){
+  switch (action.type) {
+    case "yell":
+      return {
+        message: `HEY! my previous message was ${state.message}`
+      };
+    case 'whisper':
+      return {
+        message: `shh! my previous message was ${state.message}`
+      };
+  }
+};
 
 function App() {
 
-  // useReducer takes in two arguments -> the
-  const [number, setNumber] = useReducer((number, newNumber) => number + newNumber, 0);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <h1 onClick={() => setNumber(1)}>{number}</h1>
+    <>
+      <p>Message: {state.message}</p>
+      <button onClick={() => dispatch({ type: "yell" })}>Yell</button>
+      <button onClick={() => dispatch({ type: 'whisper' })}>whisper</button>
+    </>
   );
 }
 
